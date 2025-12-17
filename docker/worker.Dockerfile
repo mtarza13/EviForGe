@@ -21,6 +21,7 @@ RUN apt-get update && apt-get install -y \
     yara \
     tshark \
     foremost \
+    bulk-extractor \
     && rm -rf /var/lib/apt/lists/*
 
 CMD ["python", "-m", "eviforge.worker"]

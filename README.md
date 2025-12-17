@@ -19,16 +19,16 @@ EviForge is an **offline-first** digital forensics platform: local-first case ma
 | **triage** | artifacts/triage | Any | JSON | ✅ Working |
 | **exif** | artifacts/exif | Images/Docs | JSON | ✅ Working |
 | **parse_text** | artifacts/parse_text | Docs/PDF/HTML | JSON | ✅ Working (Tika) |
-| **yara** | artifacts/yara | Any | JSON | ❌ Missing |
-| **pcap** | artifacts/pcap | .pcap/.pcapng | JSON | ❌ Missing |
-| **evtx** | artifacts/evtx | .evtx | JSON, CSV | ❌ Missing |
-| **registry** | artifacts/registry | Hives | JSON | ❌ Missing |
-| **browser** | artifacts/browser | SQLite (History) | JSON | ❌ Missing |
-| **email** | artifacts/email | .eml/.mbox | JSON | ❌ Missing |
-| **bulk** | artifacts/bulk_extractor | Image/Disk | Dir, JSON | ❌ Missing |
-| **carve** | artifacts/carve | Image | Dir, JSON | ❌ Missing |
-| **verify** | artifacts/verification | Evidence | JSON | ❌ Missing |
-| **report** | artifacts/reports | Case | HTML | ❌ Missing |
+| **yara** | artifacts/yara | Any | JSON | ✅ Implemented (feature-gated) |
+| **pcap** | artifacts/pcap | .pcap/.pcapng | JSON | ✅ Implemented (tshark) |
+| **evtx** | artifacts/evtx | .evtx | JSON, CSV | ✅ Implemented (feature-gated) |
+| **registry** | artifacts/registry | Hives | JSON | ✅ Implemented (feature-gated) |
+| **browser** | artifacts/browser | SQLite (History) | JSON | ✅ Implemented |
+| **email** | artifacts/email | .eml/.mbox | JSON | ✅ Implemented |
+| **bulk** | artifacts/bulk_extractor | Image/Disk | Dir, JSON | ✅ Implemented (feature-gated) |
+| **carve** | artifacts/carve | Image | Dir, JSON | ✅ Implemented (foremost) |
+| **verify** | artifacts/verification | Evidence | JSON | ✅ Implemented |
+| **report** | artifacts/reports | Case | HTML | ✅ Implemented |
 
 ## Production Deployment (Step 5)
 
@@ -156,4 +156,3 @@ curl -s "http://127.0.0.1:8000/cases/$CASE_ID/jobs" | jq
 Open `http://localhost:8000/web/cases/<CASE_ID>` in browser.
 - Check "Evidence" tab shows your file.
 - Check "Jobs" tab shows the triggered job.
-
