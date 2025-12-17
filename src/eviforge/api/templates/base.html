@@ -111,7 +111,8 @@
         }
 
         document.getElementById('themeToggle')?.addEventListener('click', toggleTheme);
-        document.getElementById('logoutBtn')?.addEventListener('click', () => {
+        document.getElementById('logoutBtn')?.addEventListener('click', async () => {
+            try { await apiFetch('/api/auth/logout', { method: 'POST' }); } catch { }
             clearAccessToken();
             window.location.href = '/web/login';
         });

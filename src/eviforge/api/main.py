@@ -21,7 +21,14 @@ from eviforge.core.db import create_session_factory
 async def lifespan(app: FastAPI):
     # Startup: Ensure DB tables exist
     settings = load_settings()
-    create_session_factory(settings.database_url)
+    SessionLocal = create_session_factory(settings.database_url)
+    try:
+        from eviforge.core.auth import ensure_bootstrap_admin
+
+        with SessionLocal() as session:
+            ensure_bootstrap_admin(session)
+    except Exception:
+        pass
     yield
     # Shutdown
 

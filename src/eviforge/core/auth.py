@@ -103,3 +103,37 @@ async def ack_dependency():
                 status_code=428,
                 detail={"error": "authorization_required", "ack_text": ACK_TEXT},
             )
+
+
+def ensure_bootstrap_admin(session: Session) -> None:
+    """
+    Production-safe bootstrap: if there are no users, create an admin user
+    using env vars. This avoids the insecure "create admin on first login"
+    anti-pattern.
+
+    Env:
+      - EVIFORGE_ADMIN_USERNAME (default: admin)
+      - EVIFORGE_ADMIN_PASSWORD (required to bootstrap)
+    """
+    try:
+        user_count = session.query(User).count()
+    except Exception:
+        return
+
+    if user_count != 0:
+        return
+
+    username = os.getenv("EVIFORGE_ADMIN_USERNAME", "admin").strip() or "admin"
+    password = os.getenv("EVIFORGE_ADMIN_PASSWORD")
+    if not password:
+        return
+
+    session.add(
+        User(
+            username=username,
+            hashed_password=get_password_hash(password),
+            role="admin",
+            is_active=True,
+        )
+    )
+    session.commit()
